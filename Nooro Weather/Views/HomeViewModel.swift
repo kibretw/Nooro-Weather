@@ -6,12 +6,15 @@
 //
 import Combine
 import Foundation
+import SwiftUI
 
 @MainActor
 class HomeViewModel: ObservableObject {
     var weatherService: WeatherServiceable
     
-    @Published var weatherResponse: WeatherResponse?
+    @Published var savedCityWeatherResponse: WeatherResponse?
+    
+    @Published var searchedWeatherResponse: WeatherResponse?
     
     @Published var searchText: String = ""
     
@@ -20,9 +23,15 @@ class HomeViewModel: ObservableObject {
     @Published var isSearching: Bool = false
         
     private var cancellables = Set<AnyCancellable>()
+    
+    @AppStorage("savedCity") var savedCity: String?
         
     init(_ weatherService: WeatherServiceable = WeatherService()) {
         self.weatherService = weatherService
+        
+        if let savedCity {
+            Task { await performSearch(for: savedCity) }
+        }
         
         $searchText
             .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
@@ -33,9 +42,15 @@ class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
+    
+    func saveCity() {
+        savedCityWeatherResponse = searchedWeatherResponse
+        savedCity = searchedWeatherResponse?.location.name
+        searchText = ""
+    }
         
     private func performSearch(for query: String) async {
-        weatherResponse = nil
+        searchedWeatherResponse = nil
         guard !query.isEmpty else {
             return
         }
@@ -46,7 +61,11 @@ class HomeViewModel: ObservableObject {
         
         switch result {
         case .success(let response):
-            weatherResponse = response
+            if !searchText.isEmpty {
+                searchedWeatherResponse = response
+            } else {
+                savedCityWeatherResponse = response
+            }
         case .failure(let failure):
             print(failure.message)
         }
