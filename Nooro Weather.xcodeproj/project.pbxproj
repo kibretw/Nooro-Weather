@@ -29,22 +29,9 @@
 		49160EAB2D471A4D005D1E8B /* Nooro WeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Nooro WeatherUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		49160EED2D4721CE005D1E8B /* Exceptions for "Nooro Weather" folder in "Nooro Weather" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Nooro-Weather-Info.plist",
-			);
-			target = 49160E902D471A4B005D1E8B /* Nooro Weather */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		49160E932D471A4B005D1E8B /* Nooro Weather */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				49160EED2D4721CE005D1E8B /* Exceptions for "Nooro Weather" folder in "Nooro Weather" target */,
-			);
 			path = "Nooro Weather";
 			sourceTree = "<group>";
 		};
